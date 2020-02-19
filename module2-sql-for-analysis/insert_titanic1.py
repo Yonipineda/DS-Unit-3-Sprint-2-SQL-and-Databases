@@ -31,16 +31,15 @@ CREATE TABLE IF NOT EXISTS passengers (
 );
 """
 curs.execute(query)
-conn.commit()  # actually update the database
+conn.commit()
 
 df = pd.read_csv(
     'https://raw.githubusercontent.com/LambdaSchool/DS-Unit-3-Sprint-2-SQL-and-Databases/master/module2-sql-for-analysis/titanic.csv')
 df['Survived'] = df['Survived'].astype(bool)
-df.rename(columns={'Siblings/Spouses Aboard': 'sibs_spouses'}, inplace=True)
 df.rename(
-    columns={'Parents/Children Aboard': 'parents_children'}, inplace=True)
+    columns={'Siblings/Spouses Aboard': 'Sibs_Spouses_Aboard'}, inplace=True)
 df.rename(
-    columns={'Parents/Children Aboard': 'parents_children'}, inplace=True)
+    columns={'Parents/Children Aboard': 'Parents_Children_Aboard'}, inplace=True)
 df['Age'] = df['Age'].astype(int)
 df['Name'] = df['Name'].str.replace("'", '')
 
@@ -48,7 +47,7 @@ for row in df.itertuples():
     insert_rows = """
     INSERT INTO passengers
     (survived, pclass, name, sex, age, sib_spouse_count, parent_child_count, fare)
-    VALUES """ + '(' + str(row.Survived) + ', ' + str(row.Pclass) + ', ' + "'" + str(row.Name) + "'" + ", '" + str(row.Sex) + "', " + str(row.Age) + ', ' + str(row.sibs_spouses) + ', ' + str(row.parents_children) + ', ' + str(row.Fare) + ');'
+    VALUES """ + '(' + str(row.Survived) + ', ' + str(row.Pclass) + ', ' + "'" + str(row.Name) + "'" + ", '" + str(row.Sex) + "', " + str(row.Age) + ', ' + str(row.Sibs_Spouses_Aboard) + ', ' + str(row.Parents_Children_Aboard) + ', ' + str(row.Fare) + ');'
     curs.execute(insert_rows)
 
 conn.commit()
