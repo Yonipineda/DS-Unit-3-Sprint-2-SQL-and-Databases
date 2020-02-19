@@ -80,7 +80,6 @@ def inserts(q, DDD=D):
     else:
         inserts(insert_prefix + insert_multir)
     finally:
-        conn.close()
         conn.commit()
 
 
@@ -89,5 +88,6 @@ This was an attempt to automate much of the process, it does its job but it is
 quite dificult to read. Probably not a good idea to write it this way when
 working with a team.
 
-I should add, this method failed to load the query into ElephantSQL.
+Initially, it did not load the query into ElephantSQL but, after rewatching them
+lecture video, it turns out doing conn.close() was the problem.
 """
